@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>CSS, Sass, & Roux | Tech Talk 10-14-15</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/elyse.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/tomorrowlight.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+
+				<section>
+					<h2>Roux & Sass Standards</h2>
+				</section>
+
+                <section>
+                    <p>Arrow left/right between sections</p>
+                    <p>Arrow up/down inside sections</p>
+                </section>
+
+                <section>
+                    <p><strong>CSS Basics</strong></p>
+                    <ol>
+                        <li>CSS Vocabulary</li>
+                        <li>Cascade & Inheritance</li>
+                        <li>Specificity</li>
+                        <li>Using Inheritance</li>
+                        <li>Composition</li>
+                    </ol>
+                </section>
+
+				<section data-state="content">
+
+					<section>
+						<h2>Vocabulary</h2>
+						<p><a href="http://nimbupani.com/css-vocabulary.html" target="blank">nimbupani.com/css-vocabulary.html</a></p>
+						<aside class="notes">
+							<p>First, a little vocab lesson. It’s easier to talk about CSS when we know all the names of what we are discussing.</p>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Selectors</h3>
+						<p class="fragment">What element(s) the styles should apply to; an element, class, ID, etc.</p>
+						<aside class="notes">
+							<p>A selector is what you declare which elements  the styles should apply to.</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><strong>Elements</strong> <code>h1</code>, <code>p</code>, <code>div</code></p>
+						<p class="fragment"><strong>Classes</strong> <code>.page-header </code></p>
+						<p class="fragment"><strong>IDs</strong> <code>#login </code></p>
+						<p class="fragment"><strong>Attributes</strong> <code>input[type=“text”] </code></p>
+						<p class="fragment"><strong>Pseudo-classes</strong> <code>:last-child </code></p>
+						<p class="fragment"><strong>Pseudo-elements</strong> <code>:after</code></p>
+					</section>
+
+					<section>
+						<p><strong>Property</strong>
+						The style that you are applying to a selector, e.g. <code>color</code>.</p>
+
+						<p class="fragment"><strong>Value</strong>
+						The value that the property can have,  e.g. <code>blue</code>.</p>
+
+
+						<aside class="notes">
+							<p>Therefore you have a property: value; pair,</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><strong>Declaration</strong> The combination of a <code>property: value;</code> pair.</p>
+					</section>
+
+					<section>
+						<p><strong>Rulesets</strong>
+						A selector followed by some number of declarations:</p>
+						<pre><code class="hljs" data-trim contenteditable>
+.classname {
+   color: blue;
+   font-size: 18px;
+}
+</code></pre>
+					</section>
+
+					<section>
+						<h2>Cascade & Inheritance</h2>
+						<p><a href="http://nicolasgallagher.com/css-cascade-specificity-inheritance/" target="blank">nicolasgallagher.com/css-cascade-specificity-inheritance</a></p>
+
+						<aside class="notes">
+							<p>Let's talk a little bit about the cascade and inheritance. This is the part of CSS that really trips everybody up when it gets complex.</p>
+
+							<p>The cascade is a mechanism for determining which styles should be applied to a given element, based on the rules that have cascaded down from various sources.</p>
+
+							<p>The cascade takes importance, origin, specificity, and source order of style rules into account. It assigns a weight to each rule. When multiple rules apply to a given element, the rule with the greatest weight takes precedence. The result is an unambiguous way to determine the value of a given element/property combination.</p>
+
+							<p>http://nicolasgallagher.com/css-cascade-specificity-inheritance/</p>
+						</aside>
+					</section>
+
+					<section>
+						<p><strong>importance + origin + specificity + source order = cascade</strong></p>
+						<aside class="notes">
+							<p>See Nicholas Gallagher notes</p>
+						</aside>
+					</section>
+
+					<section>
+						<h3>Inheritance</h3>
+						<pre><code class="hljs" data-trim contenteditable>
+header {
+    color: red;
+}
+
+.header h1 {}
+</code></pre>
+					<aside class="notes">
+						<p>what color will the h1 be? (red)</p>
+						<p>Some properties, e.g. color, are automatically inherited by the children of the element to which they are applied.</p>
+					</aside>
+					</section>
+
+					<section>
+						<h3>Source Order</h3>
+
+						<pre><code class="hljs" data-trim contenteditable>
+.header {
+    color: red;
+}
+
+.header {
+    color: blue;
+}
+
+.header h1 {}
+</code></pre>
+					<aside class="notes">
+						<p>what color will the h1 be? (blue)</p>
+						<p>Some properties, e.g. color, are automatically inherited by the children of the element to which they are applied.</p>
+					</aside>
+					</section>
+
+					<section>
+						<pre><code class="hljs" data-trim contenteditable>
+.header {
+    color: red;
+}
+
+.header {
+    color: blue;
+}
+
+.header h1 {
+    color: green;
+}
+</code></pre>
+					<aside class="notes">
+						<p>what color will the h1 be? (green)</p>
+					</aside>
+					</section>
+
+					<section>
+						<pre><code class="hljs" data-trim contenteditable>
+.header {
+    color: red;
+}
+
+.header h1 {
+    color: green;
+}
+
+.header {
+    color: blue;
+}
+
+</code></pre>
+					<aside class="notes">
+						<p>what color will the h1 be? (green) ... why? (specificity)</p>
+					</aside>
+					</section>
+
+					<section>
+						<h2>Specificity</h2>
+						<aside class="notes">
+							<p>Specificity is a method of conflict resolution within the cascade.</p>
+							<p>Specificity calculates whether or not a value will apply (and override inheritance) based on the weight of the selector.</p>
+						</aside>
+					</section>
+
+					<section>
+						<p>inline styles are <strong>1000</strong></p>
+						<p>IDs are <strong>100</strong></p>
+						<p>classes are <strong>10</strong></p>
+						<p>elements are <strong>1</strong></p>
+					</section>
+
+					<section>
+						<p><a href="http://specificity.keegan.st/" target="blank">specificity.keegan.st/</a></p>
+						<p><a href="http://codepen.io/elyseholladay/pen/LpgHc" target="blank">codepen.io/elyseholladay/pen/LpgHc</a></p>
+					</section>
+
+					<section>
+						<h2>Using Inheritance</h2>
+						<aside class="notes">
+							<p>How would you expect to use inheritance to your advantage in a complex website? (expecting an answer about "all headers in the sidebar are blue")</p>
+						</aside>
+					</section>
+
+					<section>
+                        <p>&ldquo;I want every h2 in the sidebar to look the same, and I don’t want to have to write CSS every time we create a new sidebar widget.&rdquo;</p>
+					</section>
+
+					<section>
+						<pre><code class="hljs" data-trim contenteditable>
+h2 {
+    color: #fd7900;
+    font-size: 1.8em;
+    line-height: 1.1;
+    margin-bottom: .3em;
+}
+						</code></pre>
+                        <aside class="notes">
+                            <p>It all starts because someone says “I don’t want to have to write CSS every time I add an h2″. So we write:</p>
+                        </aside>
+					</section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.sidebar h2 {
+    color: #8cc5e6;
+    font-size: 2.2em;
+    padding-bottom: .2em;
+    border-bottom: 1px solid black;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>This works great at first, but then it happens: A story owner wants to change the look of all of the .sidebar h2.</p>
+                            <p>We don’t need to change everything, just the color, size and border. So we take advantage of the CSS cascade and tweak the values that need to be updated.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.block
+    border: 1px solid #8cc5e6;
+    padding: 0 15px;
+}
+
+.block h2 {
+    /* Color was changed by .sidebar h2, set it back */
+    color: #fd7900;
+    /* remove border added by .sidebar h2 */
+    border: none;
+    /* remove the margin set by h2 */
+    margin: 0;
+    padding: .3em;
+    background: #8cc5e6;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>We are trying to be smart by breaking small pieces of functionality into reusable sidebar blocks, so we decide to create some default block styles. This way all of the blocks we create today, and in the future, can inherit the same styles. Each block has a h2, so let’s look at how that will be styled.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+/* The Markup: <div class="block alt-block"> ... </div> */
+
+.alt-block h2 {
+    /* Need to set color set by .block h2 */
+    color: #8cc5e6;
+    /* Need to set the padding-bottom back to .sidebar h2 styles */
+    padding-bottom: .2em;
+    /* Need to set the border back to .sidebar h2 styles */
+    border-bottom: 1px solid black;
+    /* Set bottom margin again from root h2 */
+    margin: 0 0 .3em;
+    /* remove background from .sidebar h2 */
+    background: none;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>Now we’ve been asked to create an alternate block style that uses the original sidebar header, but has full grey background.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <img src="https://phase2technology.com/wp-content/uploads/2014/08/Screenshot-2014-08-19-09.56.45-251x300.png" alt="">
+                        <aside class="notes">
+                            <p>our title is now inheriting styles from 4 different selectors, our code is bloated, our site’s performance is taking a hit, and our style system is incredibly fragile. Any change to h2 , .sidebar h2 , .block h2 will have an effect on .alt-block h2 whether we intended for it to or not</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p><strong>element</strong> inheritance</p>
+                        <p><strong>location</strong> inheritance</p>
+                        <p><strong>class</strong> inheritance</p>
+                        <aside class="notes">
+                            <p> In the above example we experienced 3 different types of CSS inheritance: element inheritance, location inheritance, and class inheritance. Let’s take a look at how each one of them works, why they cause problems, and solutions to fixing them.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Element Inheritance</h3>
+                        <p>ties presentation to HTML elements and markup</p>
+                        <aside class="notes">
+                            <p>We use HTML elements to add semantic meaning to our sites. When we apply styles to these elements we end up mixing semantics and presentation. I don’t mind applying a very basic set of default styles to our elements, but we ran into problems in our example when we tied our finished, presentational styles to the h2 element. This not only muddied up the water for all of our other h2 elements, but it also made those base styles impossible to reuse once overridden. Instead of relying on element inheritance to propagate our base style, we should move those styles into a reusable class or extend. You can even call it .h1 or %h1 if you want to! But the key is to avoid tying presentation to your base elements</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Location Inheritance</h3>
+                        <p>means your styles are dependent on their location in the DOM and parents</p>
+                        <aside class="notes">
+                            <p>Using location inheritance means that your header styles are dependent on being in the sidebar (not standalone or reusable), and that you’re required have intimate knowledge of your parent container before writing styles.</p>
+
+
+                            <p>Someone is going to ask you to create a new header style for the sidebar and the last thing you want to have to do is try out all 6 of the header elements ( h1 – h6) to see which one has the least number of styles to override.</p>
+                            <p>You will eventually be asked to move a component from the main content region over to the sidebar. How much do you want to bet that the .sidebar h2 styles won’t have ANY effect on the .widget h2 you are moving over.</p>
+                            <p>You might think that using a decendant selector (like .sidebar > h2) will solve all of your problems, but now your styles are dependent on markup order, and there is no way to reuse those h2 styles elsewhere in your site.</p>
+                        </aside>
+                    </section>
+
+                     <section>
+                        <h3>Class Inheritance</h3>
+                        <p>creates relationships & dependencies where none should exist</p>
+                        <aside class="notes">
+                            <p>Class inheritance is the practice of applying an entire system of styles on a collection of markup via a single class. In our example we have a .block class that is a complete component, then we add on another set of styles with .alt-block . this means that .alt-block  “modifies or relies on the internal workings of another module”. This isn’t always a bad thing, but it is something that can quickly become complex and fragile.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+<div class="block my-calendar-widget">
+  <h2>My Calendar Title</h2>
+  ...
+</div>
+                        </code></pre>
+                        <aside class="notes">
+                            <p>Imagine that you wrote the .block code, and then someone else on the team decided to create .my-calendar-widget using .block as a set of base styles, i.e. a “relied upon module”.</p>
+                            <p>what happens when we get a new story to change block to have a different background?</p>
+                            <p>Unless you have a well established system for documenting these relationships, this becomes what I like to call “hijacked inheritance”. We have no indication in our CSS that .block has another component tightly coupled to it, so we’ll be dealing with random bugs on our calendar page every time we update .block.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.block
+    border: 1px solid #8cc5e6;
+    padding: 0 15px;
+}
+
+.block h2 {
+    /* Color was changed by .sidebar h2, set it back */
+    color: #fd7900;
+    /* remove border added by .sidebar h2 */
+    border: none;
+    /* remove the margin set by h2 */
+    margin: 0;
+    padding: .3em;
+    background: #8cc5e6;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>Even with single inheritance our .block  element is still completely dependent on the cascade. Move a .block  out of the sidebar and it will break. Change the header to H3  and it will break. The problem is that each element inside of .block  inherits styles from the parent class, the block’s location and the HTML tag itself. No styles are prescribed to it due its semantic purpose, which is to be a “title”.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h2>how do we do <br/>it better?</h2>
+                    </section>
+
+                    <section>
+                        <h3>composition</h3>
+                        <p>is the idea that an html component might “contain” other styles, rather than “inheriting” those styles. </p>
+                    </section>
+
+                    <section>
+                       <pre><code class="hljs" data-trim contenteditable>
+<div class="sidebar">
+    <div class="calendar-widget">
+        <h2 class="calendar-widget-title">My Calendar Title</h2>
+        ...
+    </div>
+    <div class="latest-blogs">
+        <h2 class="latest-blogs-title">My Blog Title</h2>
+        ...
+    </div>
+    <div class="latest-news">
+        <h2 class="latest-news-title">My News Title</h2>
+        ...
+    </div>
+</div>
+                        </code></pre>
+                        <aside class="notes">
+                            <p>Note how each title has its own unique class. This allows us to target the title regardless of the element used.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                       <pre><code class="hljs" data-trim contenteditable>
+%primary-header {
+  font-size: 1.8em;
+  line-height: 1.1;
+  color: #fd7900;
+  margin: .3em;
+}
+
+%secondary-header {
+  font-size: 2.2em;
+  line-height: 1.1;
+  color: #8cc5e6;
+  margin: 0 0 .3em;
+  padding-bottom: .2em;
+  border-bottom: 1px solid black;
+}
+
+%block-header {
+  font-size: 2.2em;
+  line-height: 1.1;
+  color: #fd7900;
+  margin: 0;
+  padding: .3em;
+  background: #8cc5e6;
+  margin: 0 -15px;
+}
+
+%block {
+  border: 1px solid #8cc5e6;
+  padding: 0 15px;
+}
+
+%alt-block {
+  padding: 15px;
+  background: #eee;
+}
+                       </code></pre>
+                   </section>
+
+                    <section>
+                       <pre><code class="hljs" data-trim contenteditable>
+.calendar-widget {
+  @extend %block;
+}
+.calendar-widget-title {
+  @extend %block-header;
+}
+
+/*...*/
+
+.latest-blogs {
+  @extend %alt-block;
+}
+.latest-blogs-title {
+  @extend %secondary-header;
+}
+
+/*...*/
+
+.latest-news {
+  @extend %alt-block;
+}
+.latest-news-title {
+  @extend %secondary-header;
+}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p>Notice how each semantic selector is composed of styles rather than inheriting them from its tag, location or parent class. This allows us to “package up our code and reuse it in many different unrelated places and situations”.</p>
+                            <p>The placeholder extends create a relationship between the style and the module name, but not between different modules.</p>
+                        </aside>
+                    </section>
+
+                </section> <!-- end section1 -->
+
+
+                <section>
+                    <p><strong>Roux</strong></p>
+                    <ol>
+                        <li>CSS in Roux vs RMN</li>
+                        <li>New Pages</li>
+                        <li>Commenting</li>
+                    </ol>
+                </section>
+
+                <section data-state="content">
+
+                    <section>
+                        <p><strong>A single source of truth</strong> for the way ingredients look, their HTML and Sass/CSS code, and how to implement them;</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Refactored Sass code</strong> to improve developer ergonomics, making it easier to find what you need than to write something similar from scratch;</p>
+                    </section>
+
+                    <section>
+                        <p><strong>An accessible view into the common ingredients</strong> available to build out an RMN page, how they work, the code, and how they can be extended or modified;</p>
+                    </section>
+
+                    <section>
+                        <p><strong>An ability for developers to quickly code new features</strong> without frustrating and untraceable CSS bugs;</p>
+                    </section>
+
+                    <section>
+                        <p><strong>Improved developer and designer ergonomics</strong>, so you can work on the stuff you are best at without worrying about the rest.</p>
+                    </section>
+
+                    <section>
+                        <h2>Our CSS should be 80% Roux, 20% RMN.</h2>
+                        <aside class="notes">
+                            <p>Roux is 80% of our CSS — globals and shared styles. making one-off unique CSS is _okay_!  roux does not mean we dont have to ever write css again</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Do I write it in Roux or RMN?</h3>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>Is some or all of it unique to that page?</li>
+                            <li class="fragment">Could the code be reused in the future?</li>
+                            <li class="fragment">Or the design pattern?</li>
+                            <li class="fragment">Is it for a test?</li>
+                            <li class="fragment">Is it just plain hacky?</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2>Making a New Page</h2>
+                    </section>
+
+                    <section>
+                        <p>1. Create templates/markup</p>
+                    </section>
+
+                    <section>
+                        <p>2. Create <code>example.scss</code> manifest file in <code>www/gui/libsass</code></p>
+                    </section>
+
+                    <section>
+                        <p>3. Create partial templates in <code>libsass/pages/example/</code></p>
+                    </section>
+
+                    <section>
+                        <p>4. Import Roux and partials into <code>example.scss</code></p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+- roux // (symlink folder)
+  example.scss
+    // (imports roux, example/partial1, example/partial2)
+  - pages
+    - example
+      partial1.scss
+      partial2.scss
+                </code></pre>
+                    </section>
+
+                    <section>
+                        <h3>example.scss</h3>
+                        <ul>
+                            <li>comment header with name of page & what it is</li>
+                            <li>import roux</li>
+                            <li>import any partials</li>
+                            <li>any extra CSS that doesn’t belong in a partial</li>
+                        </ul>
+                        <aside class="notes">
+                            <p>show store</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>partial1.scss</h3>
+                        <ul>
+                            <li>comment header with name of module, what it does, where/what pages you’ll find it on</li>
+                            <li>comment subheaders between sections</li>
+                            <li>explanations/instructions for any mixins or variables</li>
+                            <li>any TODOs or notes with name & date</li>
+                        </ul>
+                        <aside class="notes">
+                            <p>show store subpages</p>
+                            <p>show typography, favorite, mobile dropdown</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Commenting Rules</h3>
+                        <ol>
+                            <li>Use <code>/* */</code> comments for page headers only; they are visible in output</li>
+                            <li>Use non-output <code>//</code> comments for explanations, usage, edge cases, individual line comments, and TODOs.</li>
+                            <li>For TODOs, leave your handle and date: <br/><code>// TODO eholladay 101415 comment goes here</code></li>
+                        </ol>
+                    </section>
+
+
+                </section> <!-- end content -->
+
+
+                <section>
+                    <p><strong>Sass Standards</strong></p>
+                    <ol>
+                        <li>General</li>
+                        <li>Naming Conventions</li>
+                        <li>Spacing & Formatting</li>
+                        <li>Media Queries</li>
+                    </ol>
+
+                    <aside class="notes">
+                        <p>anyone who says CSS is easy isn’t doing it right. Sass is a Turing-complete language and it deserves to be treated with the same amount of respect and care we treat other languages. perhaps even more, because it is responsible for what our users see, and very easy to break.</p>
+                    </aside>
+                </section>
+
+                <section data-state="content">
+
+                    <section>
+                        <h3>General</h3>
+                    </section>
+
+                    <section>
+                        <p>Keep functional Sass separate from presentational styles</p>
+
+                        <aside class="notes">
+                            <p>Keeping functional Sass separate from presentational Sass is important in order to maintain readability, search-ability and scaleability of your code. Patterns like placing mixins in the same file as presentational Sass leads to overly complex files to scan and opportunities for accidental pollution of your processed CSS. http://gist.io/4436524</p>
+                            <p>example: transitions/spinner</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Write for composition, not inheritance.</p>
+                        <aside class="notes">
+                            <p>This mainly means not to create relationships where none exist, like creating alt-block from block. Namespace your modules and make them standalone.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Extends/Placeholders, Mixins, & Maps</p>
+                        <p><a href="http://sassmeister.com/gist/a787869d74248f5d4ea2" target="blank">sassmeister.com/gist/a787869d74248f5d4ea2</a></p>
+                        <aside class="notes">
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Use extends to reuse code with no output, create a relationship</p>
+                        <p><a href="http://sassmeister.com/gist/18c47aadd302b8bd9566" target="blank">http://sassmeister.com/gist/18c47aadd302b8bd9566</a></p>
+                        <aside class="notes">
+                            <p>button placeholders</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>use mixins to alter variables, give options</p>
+                        <p><a href="http://sassmeister.com/gist/elyseholladay/878b591ee969db0026b4" target="blank">http://sassmeister.com/gist/elyseholladay/878b591ee969db0026b4</a> and <a href="http://sassmeister.com/gist/elyseholladay/1adb96cae0a363086916" target="blank">http://sassmeister.com/gist/elyseholladay/1adb96cae0a363086916</a></p>
+                        <aside class="notes">
+                            <p>square-image and spinner</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>use maps for exponential code with  a relationship</p>
+                        <p><a href="https://stash.rmn.com/projects/UI/repos/roux-ingredients/browse/sass/_molecules/_coupon_anchor.scss" target="blank">https://stash.rmn.com/projects/UI/repos/roux-ingredients/browse/sass/_molecules/_coupon_anchor.scss</a></p>
+                        <aside class="notes">
+                            <p>coupon anchors</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Namespace (nest) modules one level to eliminate conflicts… but use minimal nesting to eliminate specificity hell.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.survey-module {
+    .survey-module-header {}
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>This is OK</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.survey-module {
+    .survey-module-header {
+        .survey-module-header-close {
+            .icon-close {}
+        }
+    }
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>This is NOT OK</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Always use classes over elements or IDs.</p>
+                        <aside class="notes">
+                            <p>even when it means making more classnames!!</p>
+                            <p>elements are bad b/c: location inheritance and tightly-coupled DOM;IDs are bad: unique, only for JS. use js- prefix classes for js functionality</p>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Incorrect
+.survey-module {
+    h2 {}
+    .icon {}
+}
+
+// Correct
+.survey-module {
+    .survey-module-header {} // h2
+    .icon-close {} // specific icon
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <p>Check the existing codebase before adding  a new var, mixin, or extend.</p>
+                        <aside class="notes">
+                            <p>can you reuse something that is there? do you need to overwrite an existing function? if so, do you know where it will affect?</p>
+                            <p>places to check: roux-ingredients, typography, colors, utils/helper folders (show these)</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Variabilize numbers that have a relationship locally</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+$square-image-size: 25px;
+
+.square-image {
+    height: $square-image-size;
+    width: $square-image-size;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>these have a relationship</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+$square-image-size: 25px;
+
+.square-image {
+    height: $square-image-size;
+    width: $square-image-size;
+    padding: 10px; // creates 10px of white border/empty space around the image
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>padding doesn’t have a relationship. could we say $square-image-size*.4 ? yes. but why? not related. also.... we added a comment as to WHY</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Add inline documentation. Always.</p>
+                        <aside class="notes">
+                            <p>if your CSS is not obvious at first glance, PUT A COMMENT.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+li.ds-dfp-banner-container {
+    padding: 0;
+    margin: -1px;
+
+    .ds-dfp-banner {
+        padding: 20px 0;
+        margin: 0 -16px;
+        text-align: center;
+    }
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>why the negative one margin? why the li? what is dfp?</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// li required to add specificity to override some of the styling
+li.ds-dfp-banner-container {
+    padding: 0;
+    margin: -1px;
+
+    .ds-dfp-banner {
+        padding: 20px 0;
+        margin: 0 -16px;
+        text-align: center;
+    }
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>ok... this is an improvement.. but what styling? what is dfp?</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Double Click for Publishers (DFP) banner ads
+// ---------------------------------------------------------------------- //
+
+// li required to add specificity over .coupon-horizontal
+li.ds-dfp-banner-container {
+    // when banner ad child is hidden (DFP doesn't serve ad), li needs to seem hidden
+    padding: 0;
+    margin: -1px; // hide double border from .coupon-horizontal top borders
+
+    .ds-dfp-banner {
+        padding: 20px 0;
+        margin: 0 -16px; // align with sides when screen is small
+        text-align: center;
+    }
+}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p>muuuuch better</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <h3>Naming Conventions</h3>
+                    </section>
+
+                    <section>
+                        <p>Choose human readable names over acronyms</p>
+                    </section>
+
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.btn-lg-s {} // ???
+                        </code></pre>
+                        <aside class="notes">
+                            <p>button… large? login? logo? save? submit? </p>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.button-login-submit {}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>much easier. computers don’t really care if things are long/short/acronyms/etc. we do.</p>
+                            <p>if you have to use an acronym, like our DFP doubleclick for publishers example (because that would be annoyingly long), PUT A COMMENT!</p>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <p>Shared or global name, then specific name</p>
+                    </section>
+
+
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.blue-button      …   .button-blue
+.red-button       …   .button-red
+.submit-button    …   .button-submit
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p>easier to scan visually, easier to remember</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Use dashes, not underscores or camelcase.</p>
+                        <aside class="notes">
+                            <p>We don't specifically use BEM, although I see some people doing it, which is fine, we use a BEM-like syntax. But don't camelcase. Please.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Incorrect
+.buttonPrimary
+
+// Trying to deprecate (BEM)
+.button--primary
+
+// Correct
+.button-primary
+.button-submit-offer
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <p>Never use display/functionality in names</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.orange-box {}
+.form-float-left {}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p>why is this bad?</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.orange-box {
+   background: green;
+}
+
+.form-float-left {
+   float: right;
+}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p>lulz</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Be descriptive.</p>
+                        <aside class="notes">
+                            <p>Yes, naming is hard. You can always ask me for help. But try to explain what is in the element you are naming.</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.csat-survey
+.csat-survey-content
+  .csat-survey-header
+  .csat-survey-question-wrapper
+  .csat-survey-questions
+  .csat-survey-question
+    .csat-question-prompt
+    .button-csat-response
+                        </code></pre>
+                        <aside class="notes">
+                            <p>what's better... this...</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.csat-survey
+.surveyContent
+  .header-survey
+  .surveywrapper
+  div
+  .question-survey-item
+    p
+    .button
+                        </code></pre>
+                        <aside class="notes">
+                            <p>or this?</p>
+                        </aside>
+                    </section>
+<!--
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+
+ -->
+                    <section>
+                        <h3>Spacing & Formatting</h3>
+                    </section>
+
+                    <section>
+                        <p>Use four-space tabs with an editor config.</p>
+                    </section>
+
+                    <section>
+                        <p>Put spaces after the colon in property declarations.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Correct
+display: block;
+
+// Incorrect
+display:block;
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Put spaces before brackets in declarations.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Correct
+.class {}
+
+// Incorrect
+.class{}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Place closing braces of declaration blocks on a new line.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Correct
+.class {
+    styles: go-here;
+}
+
+// Incorrect
+.class {
+    styles: go-here; }
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Put one property per line.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Correct
+.class {
+    display: block;
+    color: red;
+}
+
+// Incorrect
+.class {
+    display: block; color: red;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>When grouping selectors, keep individual selectors to a single line.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Correct
+.class,
+.box {
+    styles: go-here;
+}
+
+// Incorrect
+.class, .box {
+    styles: go-here;
+}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Avoid specifying units for zero values and using zeros before decimals.</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+// Correct
+.class {
+    margin: 0;
+    font-size: .5em;
+}
+
+// Incorrect
+.class {
+    margin: 0px;
+    font-size: 0.5em;
+}
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p>why do we do this?</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <p>Use non-outputting // for comments</p>
+                    </section>
+
+                    <section>
+                        <p>One line between rulesets; two lines between sections</p>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.coupon-anchor {
+    ...
+    text-align: center;
+
+    // size and color of SVG icons inside the coupon anchor amount div
+    .icon {
+        width: 30px;
+        height: 45px;
+        fill: $white;
+    }
+}
+
+
+// COUPON ANCHOR COLOR MAP ---------------------------------------------- //
+// ---------------------------------------------------------------------- //
+
+                        </code></pre>
+                        <aside class="notes">
+                            <p></p>
+                        </aside>
+                    </section>
+
+
+                    <section>
+                        <h3>Media Queries</h3>
+                    </section>
+
+                    <section>
+                        <p>Write media queries inside rulesets.</p>
+                    </section>
+
+
+
+                    <section>
+                        <p>Media queries go first before all other CSS in a block.</p>
+                    </section>
+
+
+                    <section>
+                        <p>Write responsive code small to large (mobile first)</p>
+                    </section>
+
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+.page-callout-content {
+  @include media(grid-med) {
+    float: left;
+    width: 75%;
+    padding-left: 1em;
+  }
+
+  padding-top: 0.75em;
+  padding-right: 2em;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>inside, FIRST before other CSS; small to large (anything else</p>
+                        </aside>
+                    </section>
+
+                    <section>
+                        <pre><code class="hljs" data-trim contenteditable>
+@include media(grid-med) {
+  .page-callout-content {
+    float: left;
+    width: 75%;
+    padding-left: 1em;
+  }
+}
+
+.page-callout-content {
+  padding-top: 0.75em;
+  padding-right: 2em;
+}
+                        </code></pre>
+                        <aside class="notes">
+                            <p>NOT separately. inside the selector is easier to parse, and you avoid writing the selector twice</p>
+                        </aside>
+                    </section>
+
+
+
+
+                </section> <!-- end content -->
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
